@@ -4,18 +4,21 @@
 # our ready LED (BCM GPIO number)
 ready=22
 
-# The input button
+# The input pin for the Shutdown button
 button=23
 
+# Output pin (BCM GPIO number) for mains control
+mainsout=27
+
 # our play LED (BCM GPIO number)
-play=4
+play=17
 
 # The input buttons
 pbutton=24
 sbutton=25
 
 # the GPIO binary
-gpio=/usr/local/bin/gpio
+gpio=/usr/bin/gpio
 
 # lock file for playback
 plkf="/tmp/plk.file"
@@ -34,7 +37,7 @@ sndpidf="/tmp/snd.pid"
 lightplayer="ola_recorder -u 0 -i 1 --syslog --playback"
 
 # lighting file to play
-lighttrack="/home/pi/gethsemene2v3.olar"
+lighttrack="/home/pi/gethsemene2v4.olar"
 
 # lighting file to run to put the system into it's default (safe)
 # state

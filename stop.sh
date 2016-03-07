@@ -5,7 +5,7 @@
 # when it is running headless
 
 # load configuration settings (shared with the stop script)
-source "/home/pi/buttonsets.sh"
+source "/home/pi/pi-play-scripts/buttonsets.sh"
 
 
 # setup:

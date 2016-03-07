@@ -5,7 +5,7 @@
 # when it is running headless
 
 # load configuration settings (shared with the stop script)
-source "/home/pi/buttonsets.sh"
+source "/home/pi/pi-play-scripts/buttonsets.sh"
 
 
 # setup:
@@ -34,7 +34,7 @@ setup ()
   $gpio -g write ${play} 0
   # set pull-down on input pin
   $gpio -g mode ${pbutton} down
-  # set power button as interupt on rising input
+  # set play button as interupt on rising input
   $gpio edge ${pbutton} rising
   echo "Setup done"
 }
@@ -47,10 +47,27 @@ function waitButton
 echo "Waiting for play button press"
 $gpio -g wfi ${pbutton} rising
 if [[ $? -ne 0 ]] ; then
-		# error waiting for button
-		echo "Failed to wait for playback button"
-		logger "Failed to wait for playback button"
+	# error waiting for button
+	echo "Failed to wait for playback button"
+	logger "Failed to wait for playback button"
 else
+	# check for spurious trigger (debounce it)
+	sleep 0.1
+	# read state
+	state=$(${gpio} -g read ${pbutton})
+	echo "Playback pin state is ${state}"
+
+	if [[ ${state} -eq 1 ]] ; then
+		# still pressed
+		running=0
+	else
+		#transient trigger
+		echo "transient trigger"
+		return;
+		# this goes back to the outermost infinite loop, which promptly
+		# re-calls this function, so back to waiting.
+	fi
+
 	# see if we should actually start playback - try and lock the lock file
 
 	# this line will only write our PID to the file if it isn't there
