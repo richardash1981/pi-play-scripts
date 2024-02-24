@@ -6,6 +6,7 @@ import gpiozero
 from signal import pause
 import subprocess
 import sys
+import time
 
 def main(argv):
     """Main function run when script is started.
@@ -20,6 +21,9 @@ def main(argv):
 
     # Create button/LED handler object
     controller = ButtonLightController()
+
+    # Give time for OLAD to be ready
+    time.sleep(2)
 
     # Load starting scene
     RunScene("startup.olar")
