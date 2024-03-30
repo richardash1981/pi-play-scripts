@@ -1,0 +1,50 @@
+Startup file with a single data line (one set of scene values) causes the
+playback process at start to hang indefinitely and not terminate back to
+Python / Console. Don't know why, nothing in the docs suggests this.
+
+If you duplicate the line and put a line with `10` on it in between, so the
+file specifies the same state twice with a 10 millisecond gap, then all is
+well and the playback returns effectively instantly.
+
+
+# Time Machine
+
+DMX controls two channels of DMX dimmer with the two rope lights on them.
+DMX address: 1
+Rope lights on channels 1 and 2
+
+
+## LEDs direct
+
+Can I do something with the three LEDs on the front of the AMP2 just marked
+"comms"?
+
+According to the device tree these are GPIO 37 to 39 - works.
+
+GPIO zero LED and LEDBoard have nice Pulse functions but they are linear PWM
+values so don't look linear to visual perception. But really small floats
+(like 0.01) do work, so we should be able to improve on the law.
+
+Actually, just squaring the brightness (which is range 0-1) makes a large
+improvement. Three is also good but starts to introduce a dark period because
+we must hit the PWM minimum.
+Set to 2.5 as a compromise setting.
+Using 2 second on and off time gives a smooth, slow pulsing of the three LEDs
+in sequence.
+
+Shifting to 1 second gives a much faster pulse rate for the "travelling"
+phase. These can be wrapped round the ola playback to sync the two up, because
+ola_recorder blocks whilst playing (but the pulsing is in a separate thread
+per LED).
+
+copied new script `lights2.py` to /usr/local/bin/lights.py so it runs on boot. Now just
+need some appropriate show files for the two buttons to call up.
+
+## DMX Control
+
+These are OK.olar and F1.olar, which have different flash/pulse sequences.
+Created using ola_dmxconsole and then hand editing the files.
+Files go in the user home directory on the OS image.
+
+The rest of the system is copied from the Golgotha controller using the same
+hardware.
