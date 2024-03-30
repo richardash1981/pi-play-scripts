@@ -1,0 +1,4 @@
+2 x LED "PAR36" lights (low wattage).
+
+DIP settings on one light: switches 2, 3, and 10 on
+DIP settings on other light: switches 1 and 10 on
