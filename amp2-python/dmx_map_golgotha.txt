@@ -1,0 +1,23 @@
+
+
+DMX addresses for Golgtha lighting rig.
+All equipment is 3-pin XLR. 
+
+Multiform DMX dimmer addr. 5
+  5
+  6
+  7 - Outer floods
+  8 - Inner floods
+
+Pulse 108W LED PAR addr. 9
+  9 - Red
+ 10 - Green
+ 11 - Blue
+
+Pulse 108W LED PAR addr. 12
+ 12 - Red
+ 13 - Green
+ 14 - Blue
+
+End PAR can does not have a terminate swith so fit a terminator to the line
+end.
